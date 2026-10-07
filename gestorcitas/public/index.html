@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sistema de agendamiento y gestión de citas.">
+    <title>AgendaFácil | Sistema de Citas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="container navbar-inner">
+            <a class="brand" href="#inicio" onclick="mostrarVistaCliente()">
+                <span class="brand-icon">✦</span>
+                <span>
+                    <strong>AgendaFácil</strong>
+                    <small>Gestión de citas</small>
+                </span>
+            </a>
+
+            <nav class="nav-links">
+                <a href="#agendar">Agendar cita</a>
+                <a href="#mis-citas">Mis citas</a>
+                <button class="nav-login" onclick="mostrarVistaAdmin()">Acceso administrador</button>
+            </nav>
+        </div>
+    </header>
+
+    <main id="inicio">
+        <section class="hero">
+            <div class="container hero-grid">
+                <div class="hero-content">
+                    <span class="eyebrow">SISTEMA DE AGENDAMIENTO</span>
+                    <h1>Tu próxima cita, <span>más fácil.</span></h1>
+                    <p>Encuentra un negocio, agenda tu servicio y consulta tus citas desde un solo lugar.</p>
+                    <div class="hero-actions">
+                        <a class="btn btn-primary" href="#agendar">Agendar una cita</a>
+                        <a class="btn btn-light" href="#mis-citas">Consultar mis citas</a>
+                    </div>
+                </div>
+                <div class="hero-card">
+                    <div class="calendar-top">
+                        <div>
+                            <small>Agenda digital</small>
+                            <h3>Reserva en pocos pasos</h3>
+                        </div>
+                        <span class="calendar-icon">📅</span>
+                    </div>
+                    <div class="step-list">
+                        <div class="step"><span>1</span><div><strong>Selecciona un negocio</strong><small>Escoge dónde deseas ser atendido.</small></div></div>
+                        <div class="step"><span>2</span><div><strong>Completa tus datos</strong><small>Indica el servicio, fecha y hora.</small></div></div>
+                        <div class="step"><span>3</span><div><strong>Confirma tu cita</strong><small>Tu solicitud quedará registrada.</small></div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="agendar">
+            <div class="container">
+                <div class="section-heading">
+                    <span class="eyebrow">RESERVA</span>
+                    <h2>Agenda una cita</h2>
+                    <p>Completa la información para solicitar tu cita.</p>
+                </div>
+
+                <div class="form-card appointment-layout">
+                    <div class="form-side-info">
+                        <div class="info-icon">✦</div>
+                        <h3>Reserva tu tiempo</h3>
+                        <p>Selecciona el negocio y el servicio que necesitas. Después elige una fecha y hora.</p>
+                        <div class="info-note"><strong>Importante</strong><span>Recuerda ingresar un teléfono válido para consultar posteriormente tus citas.</span></div>
+                    </div>
+
+                    <form id="formCita" class="form-grid">
+                        <div class="field full">
+                            <label for="selectNegocio">Negocio</label>
+                            <select id="selectNegocio" required>
+                                <option value="">Cargando negocios...</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label for="nombreCliente">Nombre completo</label>
+                            <input type="text" id="nombreCliente" placeholder="Ej. Santiago Forero" required>
+                        </div>
+
+                        <div class="field">
+                            <label for="telefonoCliente">Teléfono</label>
+                            <input type="tel" id="telefonoCliente" placeholder="Ej. 3001234567" required>
+                        </div>
+
+                        <div class="field full">
+                            <label for="tipoServicio">Servicio</label>
+                            <input type="text" id="tipoServicio" placeholder="Ej. Corte de cabello" required>
+                        </div>
+
+                        <div class="field">
+                            <label for="fechaCita">Fecha</label>
+                            <input type="date" id="fechaCita" required>
+                        </div>
+
+                        <div class="field">
+                            <label for="horaCita">Hora</label>
+                            <input type="time" id="horaCita" required>
+                        </div>
+
+                        <div class="form-actions full">
+                            <button type="submit" class="btn btn-primary" id="btnGuardarCita">Confirmar cita</button>
+                            <button type="button" class="btn btn-secondary hidden" id="btnCancelarEdicionCita" onclick="cancelarEdicionCita()">Cancelar edición</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section-soft" id="mis-citas">
+            <div class="container narrow-container">
+                <div class="section-heading center">
+                    <span class="eyebrow">CONSULTA</span>
+                    <h2>Mis citas</h2>
+                    <p>Consulta las citas asociadas a tu número de teléfono.</p>
+                </div>
+
+                <div class="search-card">
+                    <div class="search-row">
+                        <div class="field">
+                            <label for="buscarTelefono">Número de teléfono</label>
+                            <input type="tel" id="buscarTelefono" placeholder="Ej. 3001234567">
+                        </div>
+                        <button class="btn btn-primary search-btn" type="button" onclick="consultarMisCitas()">Buscar citas</button>
+                    </div>
+                    <div id="listaMisCitas" class="appointments-list">
+                        <div class="empty-state"><span>⌕</span><p>Ingresa tu teléfono para consultar tus citas.</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="admin-section" id="administrador">
+            <div class="container">
+                <div class="section-heading center light-heading">
+                    <span class="eyebrow">ADMINISTRACIÓN</span>
+                    <h2>Panel de administrador</h2>
+                    <p>Gestiona tus negocios desde una interfaz sencilla.</p>
+                </div>
+
+                <div id="seccionLoginAdmin" class="auth-card">
+                    <div class="auth-header">
+                        <div class="auth-icon">⌂</div>
+                        <h3 id="tituloLogin">Acceso administrador</h3>
+                        <p id="textoLogin">Ingresa con tu cuenta para administrar tus negocios.</p>
+                    </div>
+
+                    <form id="formLoginAdmin" class="form-grid">
+                        <div class="field full">
+                            <label for="correoAdmin">Correo electrónico</label>
+                            <input type="email" id="correoAdmin" placeholder="correo@ejemplo.com" required>
+                        </div>
+                        <div class="field full">
+                            <label for="contrasenaAdmin">Contraseña</label>
+                            <input type="password" id="contrasenaAdmin" placeholder="••••••••" required>
+                        </div>
+                        <div class="form-actions full">
+                            <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+                        </div>
+                    </form>
+
+                    <form id="formRegistroAdmin" class="form-grid hidden">
+                        <div class="field full">
+                            <label for="nombreRegistro">Nombre completo</label>
+                            <input type="text" id="nombreRegistro" placeholder="Tu nombre" required>
+                        </div>
+                        <div class="field full">
+                            <label for="correoRegistro">Correo electrónico</label>
+                            <input type="email" id="correoRegistro" placeholder="correo@ejemplo.com" required>
+                        </div>
+                        <div class="field full">
+                            <label for="contrasenaRegistro">Contraseña</label>
+                            <input type="password" id="contrasenaRegistro" placeholder="Crea una contraseña" required>
+                        </div>
+                        <div class="form-actions full">
+                            <button type="submit" class="btn btn-primary">Crear cuenta</button>
+                        </div>
+                    </form>
+
+                    <button class="auth-switch" id="enlaceCambiarModo" onclick="alternarModoAuth(event)">¿No tienes cuenta? Regístrate aquí</button>
+                    <div id="authMensaje" class="form-message hidden"></div>
+                </div>
+
+                <div id="panelAdmin" class="admin-panel hidden">
+                    <div class="admin-topbar">
+                        <div>
+                            <span class="eyebrow">PANEL PRIVADO</span>
+                            <h3>Bienvenido, <span id="nombreAdminLogueado"></span></h3>
+                        </div>
+                        <button class="btn btn-danger-outline" onclick="cerrarSesionAdmin()">Cerrar sesión</button>
+                    </div>
+
+                    <div class="admin-grid">
+                        <div class="form-card">
+                            <div class="card-heading">
+                                <div>
+                                    <span class="eyebrow">GESTIÓN</span>
+                                    <h3 id="tituloFormNegocio">Crear nuevo negocio</h3>
+                                </div>
+                                <span class="card-number">01</span>
+                            </div>
+
+                            <form id="formNegocio" class="form-grid">
+                                <input type="hidden" id="idNegocioEdit">
+                                <div class="field full">
+                                    <label for="nombreNegocio">Nombre del negocio</label>
+                                    <input type="text" id="nombreNegocio" placeholder="Ej. Barbería Central" required>
+                                </div>
+                                <div class="field full">
+                                    <label for="tipoNegocio">Tipo de negocio</label>
+                                    <input type="text" id="tipoNegocio" placeholder="Ej. Barbería" required>
+                                </div>
+                                <div class="field full">
+                                    <label for="direccionNegocio">Dirección</label>
+                                    <input type="text" id="direccionNegocio" placeholder="Dirección del establecimiento" required>
+                                </div>
+                                <div class="field">
+                                    <label for="telefonoNegocio">Teléfono</label>
+                                    <input type="tel" id="telefonoNegocio" placeholder="Teléfono" required>
+                                </div>
+                                <div class="field">
+                                    <label for="empleadosNegocio">Empleados</label>
+                                    <input type="number" min="1" id="empleadosNegocio" placeholder="1" required>
+                                </div>
+                                <div class="form-actions full">
+                                    <button type="submit" class="btn btn-primary" id="btnGuardarNegocio">Guardar negocio</button>
+                                    <button type="button" class="btn btn-secondary hidden" id="btnCancelarEdicion" onclick="resetFormNegocio()">Cancelar edición</button>
+                                </div>
+                            </form>
+                            <div id="negocioMensaje" class="form-message hidden"></div>
+                        </div>
+
+                        <div class="business-card">
+                            <div class="card-heading">
+                                <div>
+                                    <span class="eyebrow">MIS NEGOCIOS</span>
+                                    <h3>Negocios registrados</h3>
+                                </div>
+                                <span class="count-badge" id="cantidadNegocios">0</span>
+                            </div>
+                            <div id="tablaNegociosAdmin" class="business-list"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-inner">
+            <div><strong>AgendaFácil</strong><span>Sistema de gestión y agendamiento de citas.</span></div>
+            <span>Proyecto académico · 2026</span>
+        </div>
+    </footer>
+
+    <div id="toast" class="toast"></div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
